@@ -13,7 +13,7 @@ Tài khoản Admin: admin@gmail.com / 123
   + Tính giá discount theo phần trăm giảm giá
 - **Về Khách hàng:**
   + Đăng kí, đăng nhập, đăng xuất
-  + Thêm, xóa sản phẩm vào giỏ hàng
+  + Thêm, xóa sản phẩm vào giỏ hàng, tăng giảm số lượng trong giỏ hàng
   + Thêm sản phẩm vào danh sách yêu thích
   + Xem Blog, chi tiết sản phẩm
   + Liên hệ qua Form contact (Thông báo email Admin khi có thư form contact mới)
