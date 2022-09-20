@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block title %} My Orders Details {% endblock  %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="breadcrumb-area bg-gray-4 breadcrumb-padding-1">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2>Orders Details</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><i class="ti-angle-right"></i></li>
+                <li>My Orders Details</li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-img-1">
+        <img src="{% static 'assets/images/banner/breadcrumb-1.png' %}" alt="">
+    </div>
+    <div class="breadcrumb-img-2">
+        <img src="{% static 'assets/images/banner/breadcrumb-2.png' %}" alt="">
+    </div>
+</div>
+<!-- my account wrapper start -->
+<div class="my-account-wrapper pb-100 pt-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- My Account Page Start -->
+                <div class="myaccount-page-wrapper">
+                    <!-- My Account Tab Menu Start -->
+                    
+                    <div class="row">
+                        <div class="row">
+                            <h2 style="color:#e97730 ;"><b>ORDER DETAIL</b></h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h6>Full Name :</h6>
+                                </div>
+                                <div class="col-lg-6">
+                                    <address>
+                                        <p><strong>{{order.user.first_name}} {{order.user.last_name}}</strong></p>
+                                    </address>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h6>Email :</h6>
+                                </div>
+                                <div class="col-lg-6">
+                                    <address>
+                                        <p><strong>{{order.email}}</strong></p>
+                                    </address>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h6>Payment Type :</h6>
+                                </div>
+                                <div class="col-lg-6">
+                                    <address>
+                                        <p><strong>{{order.payment_type}}</strong></p>
+                                    </address>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h6>Total Orders :</h6>
+                                </div>
+                                <div class="col-lg-6">
+                                    <address>
+                                        <p style="color:#e97730 ;"><strong>$ {{order.amount}}</strong></p>
+                                    </address>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h6>Status Order :</h6>
+                                </div>
+                                <div class="col-lg-6">
+                                    <address>
+                                        <p style="color:red ;"><strong>{{order.status}}</strong></p>
+                                    </address>
+                                </div>
+                            </div>
+                            <hr>
+
+                            
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h6>Date Order :</h6>
+                                </div>
+                                <div class="col-lg-6">
+                                    <address>
+                                        <p><strong>{{order.create_at|date:'m-d-Y'}}</strong></p>
+                                    </address>
+                                </div>
+                            </div>
+                            <hr>
+
+                            
+
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h6>Billing Address :</h6>
+                                </div>
+                                <div class="col-lg-6">
+                                    <address>
+                                        <p><strong>{{order.first_name}} {{order.last_name}}</strong></p>
+                                        <p>{{order.address}}<br>
+                                             {{order.state}}, {{order.city}}, {{order.country}}
+                                        </p>
+                                        <p>Mobile: {{order.phone}}</p>
+                                    </address>
+                                </div>
+
+
+            
+                            </div>
+                            </div>
+
+
+                        <div class="row">
+                            
+                            <h2 style="color:#e97730 ;"><b>ORDER ITEMS LIST</b></h2>
+                            <br>
+                            <hr>
+                            <br>
+                            <div class="cart-table-content">
+                                <div class="table-content table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="width-thumbnail">Image</th>
+                                                <th class="width-name">Product Name</th>
+                                                <th class="width-price"> Price</th>
+                                                <th class="width-quantity">Quantity</th>
+                                                <th class="width-subtotal">Subtotal</th>
+                                                <th class="width-remove"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            
+                                            {% for item in orderitems %}
+    
+                                            <tr>
+                                                <td class="product-thumbnail">
+                                                    <a><img src="{{item.image}}" alt=""></a>
+                                                </td>
+                                                <td class="product-name">
+                                                    <h5><a >{{item.product.title}}</a></h5>
+                                                </td>
+                                                <td class="product-cart-price"><span class="amount">$ {{item.price}}</span></td>
+                                                <td class="product-cart-price" style="text-align:center ;">{{item.quantity}}</td>
+                                                <td class="product-total"><span>$ {{ item.total }}</span></td>
+
+                                            </tr>           
+                                            {% endfor %}
+                                                
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div> <!-- My Account Page End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- my account wrapper end -->
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Register {% endblock  %}
+{% block content %}
+
+{% include 'includes/message.html' %}
+
+
+
+<div class="breadcrumb-area bg-gray-4 breadcrumb-padding-1">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2>Register </h2>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><i class="ti-angle-right"></i></li>
+                <li>Register </li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-img-1">
+        <img src="{% static 'assets/images/banner/breadcrumb-1.png' %}" alt="">
+    </div>
+    <div class="breadcrumb-img-2">
+        <img src="{% static 'assets/images/banner/breadcrumb-2.png' %}" alt="">
+    </div>
+</div>
+<div class="login-register-area pb-100 pt-95">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 offset-lg-2">
+                <div class="login-register-wrapper">
+
+                    <div class="login-register-tab-list nav">
+                        <a class="{% if '/login' == request.path %}active{% endif %}" href="{% url 'login' %}">
+                            <h4> login </h4>
+                        </a>
+                        <a class="{% if '/register' == request.path %}active{% endif %}" href="{% url 'register' %}">
+                            <h4> register </h4>
+                        </a>
+                    </div>
+
+                    {{ form.username.errors }}
+                    {{ form.email.errors }}
+                    {{ form.non_field_errors }}
+                    <div class="tab-content">
+                        <div id="lg2" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form action="{% url 'register' %}" method="post">
+                                        {{form.as_p}}
+                                        {% csrf_token %}
+
+                                        <div class="button-box btn-hover">
+                                        <button type="submit">Register</button>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock  %}
+    

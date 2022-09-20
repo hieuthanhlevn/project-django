@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %} My Orders {% endblock  %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="breadcrumb-area bg-gray-4 breadcrumb-padding-1">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2>My Orders </h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><i class="ti-angle-right"></i></li>
+                <li>My Orders </li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-img-1">
+        <img src="{% static 'assets/images/banner/breadcrumb-1.png' %}" alt="">
+    </div>
+    <div class="breadcrumb-img-2">
+        <img src="{% static 'assets/images/banner/breadcrumb-2.png' %}" alt="">
+    </div>
+</div>
+<!-- my account wrapper start -->
+<div class="my-account-wrapper pb-100 pt-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- My Account Page Start -->
+                <div class="myaccount-page-wrapper">
+                    <!-- My Account Tab Menu Start -->
+                    <div class="row">
+                        {% include 'includes/dashboard_silebar.html' %}
+
+                        <div class="col-lg-9 col-md-8">
+                            <div class="tab-content" >
+                                    <div class="myaccount-content">
+                                        <h3>Orders</h3>
+                                        <div class="myaccount-table table-responsive text-center">
+                                            <table class="table table-bordered">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Billing Name</th>
+                                                        <th>Phone</th>
+                                                        <th>Total</th>
+                                                        <th>Status</th>
+                                                        <th>Date</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    {% for order in orders %}
+                                                    <tr>
+                                                        <td>{{order.first_name}} {{order.last_name}}</td>
+                                                        <td>{{order.phone}}</td>
+                                                        <td>$ {{order.amount|floatformat:"0"|intcomma }}</td>
+                                                        <td style="color:#e97730 ;"><b>{{order.status}}</b></td>
+                                                        <th>{{order.create_at|date:'m-d-Y'}}</th>
+                                                        <td><a href="/user/my-orders/detail/{{order.id}}" class="check-btn sqr-btn ">View</a></td>
+                                                    </tr> 
+                                                    {% endfor %}
+                                                        
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div> <!-- My Account Tab Content End -->
+                    </div>
+                </div> <!-- My Account Page End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- my account wrapper end -->
+{% endblock %}

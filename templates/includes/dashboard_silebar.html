@@ -1,0 +1,9 @@
+<div class="col-lg-3 col-md-4">
+    <div class="myaccount-tab-menu nav" role="tablist">
+        <a class="{% if '/user/' == request.path %}active{% endif %}" href="{% url 'my_account' %}" >Dashboard</a>
+        <a class="{% if '/user/my-orders/' == request.path %}active{% endif %}" href="{% url 'my_orders' %}" >Orders</a>
+        <a class="{% if '/user/edit-profile/' == request.path %}active{% endif %}" href="{% url 'edit_profile' %}" >Edit Profile</a>
+        <a class="{% if '/user/change_password/' == request.path %}active{% endif %}" href="{% url 'change_password' %}">Change Password</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</div>

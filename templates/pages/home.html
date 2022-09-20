@@ -1,0 +1,463 @@
+{% extends 'base.html' %}
+{% block title %} Urdan {% endblock  %}
+{% load static %}
+{% load humanize %}
+{% load product_tags %}
+
+
+
+{% block content %}
+
+
+<div class="slider-area">
+    <div class="slider-active swiper-container">
+        <div class="swiper-wrapper">
+
+            
+            {% for slider in sliders %}
+            <div class="swiper-slide">
+                <div class="intro-section slider-height-1 slider-content-center bg-img single-animation-wrap slider-bg-color-1" style="background-image:url({% static 'assets/images/slider/slider-bg-1.jpg' %} )">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="slider-content-1 slider-animated-1">
+                                    <h3 class="animated">{{slider.topic}}</h3>
+                                    <h1 class="animated">{{slider.name}}</h1>
+                                    <div class="slider-btn btn-hover">
+                                        <a href="{% url 'shop' %}" class="btn animated">
+                                            Shop Now <i class=" ti-arrow-right "></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="hero-slider-img-1 slider-animated-1">
+                                    <img class="animated animated-slider-img-1" src="{{slider.image.url}}" alt="">
+                                    <div class="product-offer animated">
+                                        <h5>30% <span>Off</span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>               
+            {% endfor %}
+
+
+            <div class="home-slider-prev main-slider-nav"><i class="fa fa-angle-left"></i></div>
+            <div class="home-slider-next main-slider-nav"><i class="fa fa-angle-right"></i></div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="banner-area pt-100 pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="banner-wrap mb-30" data-aos="fade-up" data-aos-delay="200">
+                    <a href="{% url 'shop' %}"><img src="{% static 'assets/images/banner/banner-1.png' %}" alt=""></a>
+                    <div class="banner-content-1">
+                        <h5>new arrival</h5>
+                        <h3>Office Chair</h3>
+                        <div class="banner-btn">
+                            <a href="{% url 'shop' %}">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="banner-wrap mb-30" data-aos="fade-up" data-aos-delay="400">
+                    <a href="{% url 'shop' %}"><img src="{% static 'assets/images/banner/banner-2.png' %}" alt=""></a>
+                    <div class="banner-content-1">
+                        <h5>new arrival</h5>
+                        <h3>Hanging Chair</h3>
+                        <div class="banner-btn">
+                            <a href="{% url 'shop' %}">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="banner-wrap mb-30" data-aos="fade-up" data-aos-delay="600">
+                    <a href="{% url 'shop' %}"><img src="{% static 'assets/images/banner/banner-3.png' %}" alt=""></a>
+                    <div class="banner-content-1">
+                        <h5>new arrival</h5>
+                        <h3>Folding Chair</h3>
+                        <div class="banner-btn">
+                            <a href="{% url 'shop' %}">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="product-area pb-95">
+    <div class="container">
+        <div class="section-border section-border-margin-1" data-aos="fade-up" data-aos-delay="200">
+            <div class="section-title-timer-wrap bg-white">
+                <div class="section-title-1">
+                    <h2 style="color:#e97730 ;">Deal Of The Day</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product-slider-active-1 swiper-container">
+            <div class="swiper-wrapper">
+                
+                
+                {% for product in product_deal_of %}
+
+                <div class="swiper-slide" >
+                    <div class="product-wrap" data-aos="fade-up" data-aos-delay="200">
+                        <div class="product-img img-zoom mb-25">
+                            <a href="/product/{{ product.id }}/{{ product.slug }}">
+                                <img src="{{ product.image.url }}" alt="" style="min-height:300px ; max-width:270px ;">
+                            </a>
+                            <div class="product-badge badge-top badge-right badge-pink">
+                                <span>-{{product.discount}}%</span>
+                            </div>
+                            <div class="product-action-wrap">
+                                <a href="{% url 'add_to_wishlist' product.slug %}" class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></a>
+                                <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal1-{{ forloop.counter }}">
+                                    <i class="pe-7s-look"></i>
+                                </button>
+                            </div>
+                            <div class="product-action-2-wrap">
+                                <button class="product-action-btn-2" title="Add To Cart" data-bs-toggle="modal" data-bs-target="#exampleModal1-{{ forloop.counter }}"><i class="pe-7s-cart"></i> Add to cart</button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3><a href="/product/{{ product.id }}/{{ product.slug }}">{{product.title|truncatechars:45 }}</a></h3>
+                            <div class="product-price">
+                                <span class="old-price">$ {{ product.price|floatformat:"0"|intcomma }} </span>
+                                <span class="new-price">$ {% call_sellprice product.price product.discount %} </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+            
+            </div>
+            <div class="product-prev-1 product-nav-1" data-aos="fade-up" data-aos-delay="200"><i class="fa fa-angle-left"></i></div>
+            <div class="product-next-1 product-nav-1" data-aos="fade-up" data-aos-delay="200"><i class="fa fa-angle-right"></i></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="banner-area pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-7">
+                <div class="banner-wrap mb-30" data-aos="fade-up" data-aos-delay="200">
+                    <a href="{% url 'shop' %}"><img src="{% static 'assets/images/banner/banner-4.png' %}" alt=""></a>
+                    <div class="banner-content-2">
+                        <span>Sale 30%</span>
+                        <h2>New Furniture</h2>
+                        <p>Lorem ipsum dolor sit amet consecte adipisicing elit sed do</p>
+                        <div class="btn-style-2 btn-hover">
+                            <a href="{% url 'shop' %}" class="btn">
+                                Shop Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-5">
+                <div class="banner-wrap mb-30" data-aos="fade-up" data-aos-delay="400">
+                    <a href="{% url 'shop' %}"><img src="{% static 'assets/images/banner/banner-5.png' %}" alt=""></a>
+                    <div class="banner-content-3">
+                        <h3>Up To 30% <img src="{% static 'assets/images/icon-img/sale.png' %}" alt=""> Every Item</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="service-area pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb-30">
+                <div class="service-wrap" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-img">
+                        <img src="{% static 'assets/images/icon-img/car.png' %}" alt="">
+                    </div>
+                    <div class="service-content">
+                        <h3>Free Shipping</h3>
+                        <p>Free shipping on all order</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb-30">
+                <div class="service-wrap" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-img">
+                        <img src="{% static 'assets/images/icon-img/time.png' %}" alt="">
+                    </div>
+                    <div class="service-content">
+                        <h3>Support 24/7</h3>
+                        <p>Support 24 hours a day</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb-30">
+                <div class="service-wrap" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-img">
+                        <img src="{% static 'assets/images/icon-img/dollar.png' %}" alt="">
+                    </div>
+                    <div class="service-content">
+                        <h3>Money Return</h3>
+                        <p>Back Guarantee Under </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb-30">
+                <div class="service-wrap" data-aos="fade-up" data-aos-delay="800">
+                    <div class="service-img">
+                        <img src="{% static 'assets/images/icon-img/discount.png' %}" alt="">
+                    </div>
+                    <div class="service-content">
+                        <h3>Order Discount</h3>
+                        <p>Onevery order over $150</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="banner-area pb-95" data-aos="fade-up" data-aos-delay="200">
+    <div class="container">
+        <div class="bg-img bg-padding-1" style="background-image:url({% static 'assets/images/bg/bg-1.png' %} )">
+            <div class="banner-content-4">
+                <h2>New Dining <br>Chair Set</h2>
+                <h3>Up To 30% Off</h3>
+                <div class="btn-style-2 btn-hover">
+                    <a href="{% url 'shop' %}" class="btn">
+                        Shop Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="product-area pb-60">
+    <div class="container">
+        <div class="section-title-tab-wrap mb-75">
+            <div class="section-title-2" data-aos="fade-up" data-aos-delay="200">
+                <h2>Hot Products</h2>
+            </div>
+            <div class="tab-style-1 nav" data-aos="fade-up" data-aos-delay="400">
+                <a class="active" href="#pro-1" data-bs-toggle="tab">New Arrivals </a>
+                <a href="#pro-2" data-bs-toggle="tab" class=""> Best Sellers </a>
+                <a href="#pro-3" data-bs-toggle="tab" class=""> Sale Items </a>
+            </div>
+        </div>
+        <div class="tab-content jump">
+            <div id="pro-1" class="tab-pane active">
+                <div class="row">
+                    
+                    
+                    {% for product in product_new_arrivals %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="product-wrap mb-35" data-aos="fade-up" data-aos-delay="200">
+                            <div class="product-img img-zoom mb-25">
+                                <a href="/product/{{ product.id }}/{{ product.slug }}">
+                                    <img src="{{ product.image.url }}" alt="" style="min-height:300px ; max-width:270px ;">
+                                </a>
+                                <div class="product-badge badge-top badge-right badge-pink">
+                                    <span>-{{product.discount}}%</span>
+                                </div>
+                                <div class="product-action-wrap">
+                                    <a href="{% url 'add_to_wishlist' product.slug %}" class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></a>
+                                    <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal2-{{ forloop.counter  }}">
+                                        <i class="pe-7s-look"></i>
+                                    </button>
+                                </div>
+                                <div class="product-action-2-wrap">
+                                    <button class="product-action-btn-2" title="Add To Cart" data-bs-toggle="modal" data-bs-target="#exampleModal2-{{ forloop.counter }}"><i class="pe-7s-cart"></i> Add to cart</button>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h3><a href="/product/{{ product.id }}/{{ product.slug }}">{{product.title|truncatechars:45 }}</a></h3>
+                                <div class="product-price">
+                                    <span class="old-price">$ {{ product.price|floatformat:"0"|intcomma }} </span>
+                                <span class="new-price">$ {% call_sellprice product.price product.discount %} </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                   
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <div id="pro-2" class="tab-pane">
+                <div class="row">
+
+                
+                    {% for product in product_best_sellers %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="product-wrap mb-35">
+                            <div class="product-img img-zoom mb-25">
+                                <a href="/product/{{ product.id }}/{{ product.slug }}">
+                                    <img src="{{ product.image.url }}" alt="" style="min-height:300px ; max-width:270px ;">
+                                </a>
+                                <div class="product-badge badge-top badge-right badge-pink">
+                                    <span>-{{product.discount}}%</span>
+                                </div>
+                                <div class="product-action-wrap">
+                                    <a href="{% url 'add_to_wishlist' product.slug %}" class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></a>
+                                    <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal3-{{ forloop.counter }}">
+                                        <i class="pe-7s-look"></i>
+                                    </button>
+                                </div>
+                                <div class="product-action-2-wrap">
+                                    <button class="product-action-btn-2" title="Add To Cart" data-bs-toggle="modal" data-bs-target="#exampleModal3-{{ forloop.counter }}"><i class="pe-7s-cart"></i> Add to cart</button>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h3><a href="/product/{{ product.id }}/{{ product.slug }}">{{product.title|truncatechars:45 }}</a></h3>
+                                <div class="product-price">
+                                    <span class="old-price">$ {{ product.price|floatformat:"0"|intcomma }} </span>
+                                <span class="new-price">$ {% call_sellprice product.price product.discount %} </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                   
+                    {% endfor %}
+  
+
+                </div>
+            </div>
+
+            <div id="pro-3" class="tab-pane">
+                <div class="row">
+
+                    {% for product in product_sale_items %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="product-wrap mb-35">
+                            <div class="product-img img-zoom mb-25">
+                                <a href="/product/{{ product.id }}/{{ product.slug }}">
+                                    <img src="{{ product.image.url }}" alt="" style="min-height:300px ; max-width:270px ;">
+                                </a>
+                                <div class="product-badge badge-top badge-right badge-pink">
+                                    <span>-{{product.discount}}%</span>
+                                </div>
+                                <div class="product-action-wrap">
+                                    <a href="{% url 'add_to_wishlist' product.slug %}" class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></a>
+                                    <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal4-{{ forloop.counter  }}">
+                                        <i class="pe-7s-look"></i>
+                                    </button>
+                                </div>
+                                <div class="product-action-2-wrap">
+                                    <button class="product-action-btn-2" title="Add To Cart" data-bs-toggle="modal" data-bs-target="#exampleModal4-{{ forloop.counter }}"><i class="pe-7s-cart"></i> Add to cart</button>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h3><a href="/product/{{ product.id }}/{{ product.slug }}">{{product.title|truncatechars:45 }}</a></h3>
+                                <div class="product-price">
+                                    <span class="old-price">$ {{ product.price|floatformat:"0"|intcomma }} </span>
+                                    <span class="new-price">$ {% call_sellprice product.price product.discount %} </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                   
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="brand-logo-area pb-95">
+    <div class="container">
+        <div class="brand-logo-active swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="single-brand-logo" data-aos="fade-up" data-aos-delay="200">
+                        <a href="#"><img src="{% static 'assets/images/brand-logo/brand-logo-1.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="single-brand-logo" data-aos="fade-up" data-aos-delay="400">
+                        <a href="#"><img src="{% static 'assets/images/brand-logo/brand-logo-2.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="single-brand-logo" data-aos="fade-up" data-aos-delay="600">
+                        <a href="#"><img src="{% static 'assets/images/brand-logo/brand-logo-3.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="single-brand-logo" data-aos="fade-up" data-aos-delay="800">
+                        <a href="#"><img src="{% static 'assets/images/brand-logo/brand-logo-4.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="single-brand-logo" data-aos="fade-up" data-aos-delay="1000">
+                        <a href="#"><img src="{% static 'assets/images/brand-logo/brand-logo-5.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="single-brand-logo" data-aos="fade-up" data-aos-delay="1200">
+                        <a href="#"><img src="{% static 'assets/images/brand-logo/brand-logo-1.png' %}" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="blog-area pb-70">
+    <div class="container">
+        <div class="section-title-2 st-border-center text-center mb-75" data-aos="fade-up" data-aos-delay="200">
+            <h2>Latest News</h2>
+        </div>
+        <div class="row">
+            
+            {% for post in posts %}
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-wrap mb-30" data-aos="fade-up" data-aos-delay="200">
+                    <div class="blog-img-date-wrap mb-25">
+                        <div class="blog-img">
+                            <a href="/blog/{{ post.id }}/{{ post.slug }}"><img src="{{post.image.url}}" alt="" style="min-height:250px; max-width:370px;"></a>
+                        </div>
+                        <div class="blog-date">
+                            <h5>{{post.created_on|date:'d'}}<span>{{post.created_on|date:'M'}}</span></h5>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <h3><a href="/blog/{{ post.id }}/{{ post.slug }}">{{post.title|truncatechars:45}}.</a></h3>
+                        <div class="blog-btn">
+                            <a href="/blog/{{ post.id }}/{{ post.slug }}">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+                
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock  %}
+
+
+

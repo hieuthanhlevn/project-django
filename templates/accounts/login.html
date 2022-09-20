@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %} Login {% endblock  %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="breadcrumb-area bg-gray-4 breadcrumb-padding-1">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2>Login  </h2>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><i class="ti-angle-right"></i></li>
+                <li>Login </li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-img-1">
+        <img src="{% static 'assets/images/banner/breadcrumb-1.png' %}" alt="">
+    </div>
+    <div class="breadcrumb-img-2">
+        <img src="{% static 'assets/images/banner/breadcrumb-2.png' %}" alt="">
+    </div>
+</div>
+<div class="login-register-area pb-100 pt-95">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 offset-lg-2">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a class="active" data-bs-toggle="tab" href="#lg1">
+                            <h4> login </h4>
+                        </a>
+                        <a class="{% if '/register' == request.path %}active{% endif %}" href="{% url 'register' %}">
+                            <h4> register </h4>
+                        </a>
+                    </div>
+                    <div class="tab-content">
+                        {% include 'includes/message.html' %}
+                        <div id="lg1" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form action="{% url 'login' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" name="email" placeholder="Email">
+                                        <input type="password" name="password" placeholder="Password">
+                                        <div class="login-toggle-btn">
+                                            <input type="checkbox">
+                                            <label>Remember me</label>
+                                            <a href="{% url 'forgotPassword' %}">Forgot Password?</a>
+                                        </div>
+                                        <div class="button-box btn-hover">
+                                            <button type="submit">Login</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock  %}
+    

@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% block title %} Shop {% endblock  %}
+{% load static %}
+{% load humanize %}
+{% load product_tags %}
+
+
+{% block content %}
+
+<div class="breadcrumb-area bg-gray-4 breadcrumb-padding-1">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2 data-aos="fade-up" data-aos-delay="200">Shop</h2>
+            <ul data-aos="fade-up" data-aos-delay="400">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><i class="ti-angle-right"></i></li>
+                <li>Shop </li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-img-1" data-aos="fade-right" data-aos-delay="200">
+        <img src="{% static 'assets/images/banner/breadcrumb-1.png' %}" alt="">
+    </div>
+    <div class="breadcrumb-img-2" data-aos="fade-left" data-aos-delay="200">
+        <img src="{% static 'assets/images/banner/breadcrumb-2.png' %}" alt="">
+    </div>
+</div>
+<div class="shop-area pt-100 pb-100">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-12">
+                <div class="shop-topbar-wrapper mb-40">
+                    <div class="shop-topbar-left">
+                        <div class="showing-item">
+                            <span>Showing <b style="color:red ;">{{product_count}}</b> results</span>
+                        </div>
+                    </div>
+                    <div class="shop-topbar-right">
+                        <div class="shop-sorting-area">
+                            <select class="nice-select nice-select-style-1">
+                                <option>Default Sorting</option>
+                                <option>Sort by popularity</option>
+                                <option>Sort by average rating</option>
+                                <option>Sort by latest</option>
+                            </select>
+                        </div>
+                        <div class="shop-view-mode nav">
+                            <a class="active" href="#shop-1" data-bs-toggle="tab"><i class=" ti-layout-grid3 "></i> </a>
+                            <a href="#shop-2" data-bs-toggle="tab" class=""><i class=" ti-view-list-alt "></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="shop-bottom-area">
+                    <div class="tab-content jump">
+                        <div id="shop-1" class="tab-pane active">
+                            <div class="row">
+
+                                
+                                {% for product in products %}
+
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <div class="product-wrap mb-35" data-aos="fade-up" data-aos-delay="200">
+                                        <div class="product-img img-zoom mb-25">
+                                            <a href="/product/{{ product.id }}/{{ product.slug }}">
+                                                <img src="{{product.image.url}}" alt="">
+                                            </a>
+                                            <div class="product-badge badge-top badge-right badge-pink">
+                                                <span>-{{product.discount}}%</span>
+                                            </div>
+                                            <div class="product-action-wrap">
+                                                <a href="{% url 'add_to_wishlist' product.slug %}" class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></a>
+                                                <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal-{{forloop.counter}}">
+                                                    <i class="pe-7s-look"></i>
+                                                </button>
+                                            </div>
+                                            <div class="product-action-2-wrap">
+                                                <button class="product-action-btn-2" title="Add To Cart" data-bs-toggle="modal" data-bs-target="#exampleModal-{{forloop.counter}}"><i class="pe-7s-cart"></i> Add to cart</button>
+                                            </div>
+                                        </div>
+                                        <div class="product-content">
+                                            <h3><a href="/product/{{ product.id }}/{{ product.slug }}">{{product.title|truncatechars:45}}</a></h3>
+                                            <div class="product-price">
+                                                <span class="old-price">$ {{ product.price|floatformat:"0"|intcomma }} </span>
+                                                <span class="new-price">$ {% call_sellprice product.price product.discount %} </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                                                    
+                                {% endfor %}
+                                    
+
+
+                            </div>
+                            <div class="pagination-style-1" data-aos="fade-up" data-aos-delay="200">
+
+                                
+                                {% if products.has_other_pages %}
+                                    <ul>
+                                        {% for i in products.paginator.page_range %}
+                                            {% if products.number == i %}
+                                                <li><a class="active" href="#">{{i}}</a></li>
+                                            {% else %}
+                                                <li><a class="" href="?page={{i}}">{{i}}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if products.has_next %}
+                                        <li><a class="next" href="?page={{ products.next_page_number }}"><i class=" ti-angle-double-right "></i></a></li>
+                                        {% endif %}
+                                    </ul>
+                                {% endif %}
+                                    
+                                
+
+
+                            </div>
+                        </div>
+
+
+
+
+
+                        
+                        <div id="shop-2" class="tab-pane">
+                            {% for product in products %}
+
+                            <div class="shop-list-wrap mb-30">
+                                <div class="row">
+                                    <div class="col-lg-4 col-sm-5">
+                                        <div class="product-list-img">
+                                            <a href="/product/{{ product.id }}/{{ product.slug }}">
+                                                <img src="{{product.image.url}}" alt="Product Style" style="max-height:270px; min-width:270px ;">
+                                            </a>
+                                            <div class="product-list-badge badge-right badge-pink">
+                                                <span>-{{product.discount}}%</span>
+                                            </div>
+                                            <div class="product-list-quickview">
+                                                <button class="product-action-btn-2" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal-{{forloop.counter}}">
+                                                    <i class="pe-7s-look"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 col-sm-7">
+                                        <div class="shop-list-content">
+                                            <h3><a href="/product/{{ product.id }}/{{ product.slug }}">{{product.title|truncatechars:45}}</a></h3>
+                                            <div class="product-price">
+                                                <span class="old-price">$ {{ product.price|floatformat:"0"|intcomma }} </span>
+                                                <span class="new-price">$ {% call_sellprice product.price product.discount %} </span>
+                                            </div>
+                                            <div class="product-list-rating">
+                                                <i class=" ti-star"></i>
+                                                <i class=" ti-star"></i>
+                                                <i class=" ti-star"></i>
+                                                <i class=" ti-star"></i>
+                                                <i class=" ti-star"></i>
+                                            </div>
+                                            <p>{{product.description|safe|truncatechars:200}}</p>
+                                            <div class="product-list-action">
+                                                <button class="product-action-btn-3" title="Add to cart" data-bs-toggle="modal" data-bs-target="#exampleModal-{{forloop.counter}}"><i class="pe-7s-cart"></i></button>
+                                                <a href="{% url 'add_to_wishlist' product.slug %}" class="product-action-btn-3" title="Wishlist"><i class="pe-7s-like"></i></a>
+                                                <button class="product-action-btn-3" title="Compare"><i class="pe-7s-shuffle"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="pagination-style-1">
+
+
+                                {% if products.has_other_pages %}
+                                    <ul>
+                                        {% for i in products.paginator.page_range %}
+                                            {% if products.number == i %}
+                                                <li><a class="active" href="#">{{i}}</a></li>
+                                            {% else %}
+                                                <li><a class="" href="?page={{i}}">{{i}}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if products.has_next %}
+                                        <li><a class="next" href="?page={{ products.next_page_number }}"><i class=" ti-angle-double-right "></i></a></li>
+                                        {% endif %}
+                                    </ul>
+                                {% endif %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock  %}

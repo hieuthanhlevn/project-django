@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block title %} My Cart {% endblock  %}
+{% load cart_tag %}
+{% load humanize %}
+{% load static %}
+
+
+{% block content %}
+<div class="breadcrumb-area bg-gray-4 breadcrumb-padding-1">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2>Cart</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><i class="ti-angle-right"></i></li>
+                <li>Cart</li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-img-1">
+        <img src="{% static 'assets/images/banner/breadcrumb-1.png' %}" alt="">
+    </div>
+    <div class="breadcrumb-img-2">
+        <img src="{% static 'assets/images/banner/breadcrumb-2.png' %}" alt="">
+    </div>
+</div>
+<div class="cart-area pt-100 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="#">
+                    <div class="cart-table-content">
+                        <div class="table-content table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="width-thumbnail"></th>
+                                        <th class="width-name">Product</th>
+                                        <th class="width-price"> Price</th>
+                                        <th class="width-quantity">Quantity</th>
+                                        <th class="width-subtotal">Subtotal</th>
+                                        <th class="width-remove"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for key,value in request.session.cart.items %}
+                                    <tr id="id{{value.id}}">
+                                        <td class="product-thumbnail">
+                                            <a href="/product/{{ product.id }}/{{ product.slug }}"><img src="{{value.image}}" alt=""></a>
+                                        </td>
+                                        <td class="product-name">
+                                            <h5><a href="/product/{{ product.id }}/{{ product.slug }}">{{value.name}}</a></h5>
+                                        </td>
+                                        <td class="product-cart-price"><span class="amount">$ {{ value.price|floatformat:"0"|intcomma }}</span></td>
+                                        <td class="cart-quality w-100" >
+                                            
+                                                <div class="row ">
+                                                    <div class="col-2">
+                                                        <a href="{% url 'item_decrement' value.product_id %}#id{{value.id}}" class="text-center "> - </a>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input class="form-control border-0 text" type="text" value="{{value.quantity}}" >
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <a href="{% url 'item_increment' value.product_id %}#id{{value.id}}" class="text-center"> + </a>
+                                                    </div>
+                                                </div>
+                                        </td>
+                                        <td class="product-total"><span>$ {{ value.price|multiply:value.quantity|floatformat:"0"|intcomma }}</span></td>
+                                        <td class="product-remove"><a href="{% url 'item_clear' key %}" onclick="return confirm('Are you sure')"><i class=" ti-trash "></i></a></td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="cart-shiping-update-wrapper">
+                                <div class="cart-shiping-update btn-hover">
+                                    <a href="{% url 'shop' %}">Continue Shopping</a>
+                                </div>
+                                <div class="cart-clear-wrap">
+                         
+                                    <div class="cart-clear btn-hover">
+                                        <a href="{% url 'cart_clear' %}">Clear Cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-lg-4 col-md-6 col-12">
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="cart-calculate-discount-wrap mb-40">
+                    <h4>Coupon Discount </h4>
+                    <div class="calculate-discount-content">
+                        <p>Enter your coupon code if you have one.</p>
+                        <div class="input-style">
+                            <input type="text" placeholder="Coupon code">
+                        </div>
+                        <div class="calculate-discount-btn btn-hover">
+                            <a class="btn theme-color" href="#">Apply Coupon</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="grand-total-wrap">
+                    <div class="grand-total-content">
+                        <h3>Subtotal <span>${{cart_total_amount|floatformat:"0"|intcomma}}</span></h3>
+                        <div class="grand-shipping">
+                            <span>Shipping</span>
+                            <ul>
+                                <li><input type="radio" name="shipping" value="info" checked="checked"><label>Free shipping</label></li>
+                            </ul>
+                        </div>
+                        <div class="grand-total">
+                            <h4>Total <span>${{cart_total_amount|floatformat:"0"|intcomma}}</span></h4>
+                        </div>
+                    </div>
+                    <div class="grand-total-btn btn-hover">
+                        <a class="btn theme-color" href="{% url 'checkout' %}">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock  %}
+    

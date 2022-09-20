@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %} My Account {% endblock  %}
+{% load static %}
+
+{% block content %}
+<div class="breadcrumb-area bg-gray-4 breadcrumb-padding-1">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2>My Account </h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><i class="ti-angle-right"></i></li>
+                <li>My Account </li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-img-1">
+        <img src="{% static 'assets/images/banner/breadcrumb-1.png' %}" alt="">
+    </div>
+    <div class="breadcrumb-img-2">
+        <img src="{% static 'assets/images/banner/breadcrumb-2.png' %}" alt="">
+    </div>
+</div>
+
+<!-- my account wrapper start -->
+<div class="my-account-wrapper pb-100 pt-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- My Account Page Start -->
+                <div class="myaccount-page-wrapper">
+                    <!-- My Account Tab Menu Start -->
+                    <div class="row">
+
+                        {% include 'includes/dashboard_silebar.html' %}
+
+                        
+                        <div class="col-lg-9 col-md-8">
+                            <div class="tab-content" id="myaccountContent">
+                                <!-- Single Tab Content Start -->
+                                <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
+                                    <div class="myaccount-content">
+                                        <h3>Dashboard</h3>
+                                        <div class="welcome">
+                                            <p>Hello, <strong>{{user.first_name}} {{user.last_name}}</strong> (If Not <strong>Tuntuni !</strong><a href="{% url 'logout' %}" class="logout"> Logout</a>)</p>
+                                        </div>
+
+                                        <p class="mb-0">From your account dashboard. you can easily check & view your recent orders, manage your shipping and billing addresses and edit your password and account details.</p>
+                                    </div>
+                                </div>
+                                <!-- Single Tab Content End -->
+
+
+                            </div>
+                        </div> <!-- My Account Tab Content End -->
+                    </div>
+                </div> <!-- My Account Page End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- my account wrapper end -->
+
+{% endblock  %}
+    

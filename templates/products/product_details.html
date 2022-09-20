@@ -1,0 +1,419 @@
+{% extends 'base.html' %}
+{% block title %} Product Detail - {{product.title}} {% endblock  %}
+{% load static %}
+{% load humanize %}
+{% load product_tags %}
+
+
+
+{% block content %}
+
+{% include 'includes/message.html' %}
+
+<div class="breadcrumb-area bg-gray-4 breadcrumb-padding-1">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2 data-aos="fade-up" data-aos-delay="200">Product Details</h2>
+            <ul data-aos="fade-up" data-aos-delay="400">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><i class="ti-angle-right"></i></li>
+                <li><a href="/category/{{product.category.id}}/{{product.category.slug}}">{{product.title|truncatechars:25}}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-img-1" data-aos="fade-right" data-aos-delay="200">
+        <img src="{% static 'assets/images/banner/breadcrumb-1.png' %}" alt="">
+    </div>
+    <div class="breadcrumb-img-2" data-aos="fade-left" data-aos-delay="200">
+        <img src="{% static 'assets/images/banner/breadcrumb-2.png' %}" alt="">
+    </div>
+</div>
+<div class="product-details-area pb-100 pt-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="product-details-img-wrap" data-aos="fade-up" data-aos-delay="200">
+                    <div class="swiper-container product-details-big-img-slider-2 pd-big-img-style">
+                        <div class="swiper-wrapper">
+
+                            
+                            <div class="swiper-slide">
+                                <div class="easyzoom-style">
+                                    <div class="easyzoom easyzoom--overlay" >
+                                        <a href="{{product.image.url}}" >
+                                            <img src="{{product.image.url}}" alt="" style="min-height:522px; max-width:470px;">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            {% for image in images %}
+                            <div class="swiper-slide">
+                                <div class="easyzoom-style">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="{{image.image.url}}" >
+                                            <img src="{{image.image.url}}" alt="" style="min-height:522px; max-width:470px;">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>  
+                            {% endfor %}
+                                
+
+                        </div>
+                    </div>
+                    <div class="product-details-small-img-wrap">
+                        <div class="swiper-container product-details-small-img-slider-2 pd-small-img-style pd-small-img-style-modify">
+                            <div class="swiper-wrapper">
+
+                                <div class="swiper-slide">
+                                    <div class="product-details-small-img">
+                                        <img src="{{product.image.url}}" alt="Product Thumnail">
+                                    </div>
+                                </div>
+                                {% for image in images %}
+                                <div class="swiper-slide">
+                                    <div class="product-details-small-img">
+                                        <img src="{{image.image.url}}" alt="Product Thumnail">
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+
+                            </div>
+                        </div>
+                        <div class="pd-prev-2 pd-nav-style-2"> <i class="ti-angle-left"></i></div>
+                        <div class="pd-next-2 pd-nav-style-2"> <i class="ti-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="product-details-content" data-aos="fade-up" data-aos-delay="400">
+                    <h2>{{product.title}}</h2>
+                    <div class="product-details-price">
+                        <span class="old-price">$ {{ product.price|floatformat:"0"|intcomma }} </span>
+                        <span class="new-price">$ {% call_sellprice product.price product.discount %} </span>
+                    </div>
+                    <div class="product-details-review">
+                        <div class="product-rating">
+                            <i class=" ti-star"></i>
+                            <i class=" ti-star"></i>
+                            <i class=" ti-star"></i>
+                            <i class=" ti-star"></i>
+                            <i class=" ti-star"></i>
+                        </div>
+                        <span>( 1 Customer Review )</span>
+                    </div>
+                    <div class="product-color product-color-active product-details-color">
+                        {% if product.variation_set.all %}
+                        <span>Color :</span>
+                        <ul> 
+                            {% for item in product.variation_set.all %}
+                            <li><a  style="background-color:{{item.code_color}} ;">{{item.name_color}} <input type="hidden" value="{{item.name_color}}"></a></li>
+                            {% endfor %}   
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <form action="/order/addtoshopcart/{{ product.id }}" method="post">
+                        {% csrf_token %}
+                    <div class="product-details-action-wrap">
+                        <div class="product-quality">
+                            <input class="cart-plus-minus-box input-text qty text" name="quantity" value="1" min="1" max="{{ product.amount }}">
+                        </div>
+                        <div class="single-product-cart btn-hover">
+                            <a type="submit" href="{% url 'cart_add' product.id %}">Add to cart</a>
+                        </div>
+                        <div class="single-product-wishlist">
+                            <a href="{% url 'add_to_wishlist' product.slug %}" title="Wishlist" href="wishlist.html"><i class="pe-7s-like"></i></a>
+                        </div>
+                        <div class="single-product-compare">
+                            <a title="Compare" href="#"><i class="pe-7s-shuffle"></i></a>
+                        </div>
+                    </div>
+                    </form>
+                    <div class="product-details-meta">
+                        <ul>
+                            <li><span class="title">SKU:</span> Ch-256xl</li>
+                            <li><span class="title">Category:</span>
+                                <ul>
+                                    <li><a href="#">Office</a>,</li>
+                                    <li><a href="#">Home</a></li>
+                                </ul>
+                            </li>
+                            <li><span class="title">Tags:</span>
+                                <ul class="tag">
+                                    <li><a href="#">Furniture</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="social-icon-style-4">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-dribbble"></i></a>
+                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="description-review-area pb-85">
+    <div class="container">
+        <div class="description-review-topbar nav" data-aos="fade-up" data-aos-delay="200">
+            <a class="active" data-bs-toggle="tab" href="#des-details1"> Description </a>
+            <a data-bs-toggle="tab" href="#des-details2" class=""> Information </a>
+            <a data-bs-toggle="tab" href="#des-details3" class=""> Reviews </a>
+        </div>
+        <div class="tab-content">
+            <div id="des-details1" class="tab-pane active">
+                
+                    <p data-aos="fade-up" data-aos-delay="200">{{ product.description |safe }}</p>
+               
+            </div>
+            <div id="des-details2" class="tab-pane">
+                <div class="specification-wrap table-responsive">
+                    <table>
+                        <tbody>
+                            {{product.detail |safe}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="des-details3" class="tab-pane">
+                <div class="review-wrapper">
+                    <h3>1 review for Sleeve Button Cowl Neck</h3>
+                    <div class="single-review">
+                        <div class="review-img">
+                            <img src="{% static 'assets/images/product-details/review-1.png' %}" alt="">
+                        </div>
+                        <div class="review-content">
+                            <div class="review-rating">
+                                <a href="#"><i class="ti-star"></i></a>
+                                <a href="#"><i class="ti-star"></i></a>
+                                <a href="#"><i class="ti-star"></i></a>
+                                <a href="#"><i class="ti-star"></i></a>
+                                <a href="#"><i class="ti-star"></i></a>
+                            </div>
+                            <h5><span>HasTech</span> - April 29, 2020</h5>
+                            <p>Donec accumsan auctor iaculis. Sed suscipit arcu ligula, at egestas magna molestie a. Proin ac ex maximus, ultrices justo eget, sodales orci. Aliquam egestas libero ac turpis pharetra, in vehicula lacus scelerisque</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ratting-form-wrapper">
+                    <h3>Add a Review</h3>
+
+                    <div class="ratting-form">
+                        
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{message.tags}}" role="alert"> {{ message }} </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form action="/product/addcomment/{{product.id}}" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="rating-form-style mb-15">
+                                        <label>Subject <span>*</span></label>
+                                        <input type="text" name="subject">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="rating-form-style mb-15">
+                                        <label>Email <span></span></label>
+                                        <input type="email" name="email">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="rating-form-style mb-15">
+                                        <label>Your review <span>*</span></label>
+                                        <textarea name="comment"></textarea>
+                                    </div>
+                                </div>
+                                <div class="your-rating-wrap">
+                                    <span>Your rating</span>
+                                    <div class="your-rating">
+                                        <a  name="rate" value='1'><i class="ti-star"></i></a>
+                                        <a  name="rate" value='2'><i class="ti-star"></i></a>
+                                        <a  name="rate" value='3'><i class="ti-star"></i></a>
+                                        <a  name="rate" value='4'><i class="ti-star"></i></a>
+                                        <a  name="rate" value='5'><i class="ti-star"></i></a>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-12">
+                                    <div class="save-email-option">
+                                        <p><input type="checkbox"> <label>Save my name, email, and website in this browser for the next time I comment.</label></p>
+                                    </div>
+                                </div>
+                               
+                                
+                                {% if user.id is not None %}
+                                <div class="col-lg-12">
+                                    <div class="form-submit">
+                                        <input type="submit" value="Submit">
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <h4 style="color:red;">You must logged in to post review</h4>
+                                {% endif %}
+                                    
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="related-product-area pb-95">
+    <div class="container">
+        <div class="section-title-2 st-border-center text-center mb-75" data-aos="fade-up" data-aos-delay="200">
+            <h2>Related Products</h2>
+        </div>
+        <div class="related-product-active swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="product-wrap" data-aos="fade-up" data-aos-delay="200">
+                        <div class="product-img img-zoom mb-25">
+                            <a href="product-details.html">
+                                <img src="{% static 'assets/images/product/product-1.png' %}" alt="">
+                            </a>
+                            <div class="product-badge badge-top badge-right badge-pink">
+                                <span>-10%</span>
+                            </div>
+                            <div class="product-action-wrap">
+                                <button class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></button>
+                                <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="pe-7s-look"></i>
+                                </button>
+                            </div>
+                            <div class="product-action-2-wrap">
+                                <button class="product-action-btn-2" title="Add To Cart"><i class="pe-7s-cart"></i> Add to cart</button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3><a href="product-details.html">New Modern Sofa Set</a></h3>
+                            <div class="product-price">
+                                <span class="old-price">$25.89 </span>
+                                <span class="new-price">$20.25 </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="product-wrap" data-aos="fade-up" data-aos-delay="400">
+                        <div class="product-img img-zoom mb-25">
+                            <a href="product-details.html">
+                                <img src="{% static 'assets/images/product/product-2.png' %}" alt="">
+                            </a>
+                            <div class="product-action-wrap">
+                                <button class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></button>
+                                <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="pe-7s-look"></i>
+                                </button>
+                            </div>
+                            <div class="product-action-2-wrap">
+                                <button class="product-action-btn-2" title="Add To Cart"><i class="pe-7s-cart"></i> Add to cart</button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3><a href="product-details.html">New Modern Sofa Set</a></h3>
+                            <div class="product-price">
+                                <span>$50.25 </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="product-wrap" data-aos="fade-up" data-aos-delay="600">
+                        <div class="product-img img-zoom mb-25">
+                            <a href="product-details.html">
+                                <img src="{% static 'assets/images/product/product-3.png' %}" alt="">
+                            </a>
+                            <div class="product-badge badge-top badge-right badge-pink">
+                                <span>-10%</span>
+                            </div>
+                            <div class="product-action-wrap">
+                                <button class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></button>
+                                <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="pe-7s-look"></i>
+                                </button>
+                            </div>
+                            <div class="product-action-2-wrap">
+                                <button class="product-action-btn-2" title="Add To Cart"><i class="pe-7s-cart"></i> Add to cart</button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3><a href="product-details.html">Easy Modern Chair</a></h3>
+                            <div class="product-price">
+                                <span class="old-price">$45.00 </span>
+                                <span class="new-price">$40.00 </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="product-wrap" data-aos="fade-up" data-aos-delay="800">
+                        <div class="product-img img-zoom mb-25">
+                            <a href="product-details.html">
+                                <img src="{% static 'assets/images/product/product-4.png' %}" alt="">
+                            </a>
+                            <div class="product-action-wrap">
+                                <button class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></button>
+                                <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="pe-7s-look"></i>
+                                </button>
+                            </div>
+                            <div class="product-action-2-wrap">
+                                <button class="product-action-btn-2" title="Add To Cart"><i class="pe-7s-cart"></i> Add to cart</button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3><a href="product-details.html">Stylish Swing Chair</a></h3>
+                            <div class="product-price">
+                                <span>$30.25 </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="product-wrap">
+                        <div class="product-img img-zoom mb-25">
+                            <a href="product-details.html">
+                                <img src="{% static 'assets/images/product/product-2.png' %}" alt="">
+                            </a>
+                            <div class="product-badge badge-top badge-right badge-pink">
+                                <span>-10%</span>
+                            </div>
+                            <div class="product-action-wrap">
+                                <button class="product-action-btn-1" title="Wishlist"><i class="pe-7s-like"></i></button>
+                                <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="pe-7s-look"></i>
+                                </button>
+                            </div>
+                            <div class="product-action-2-wrap">
+                                <button class="product-action-btn-2" title="Add To Cart"><i class="pe-7s-cart"></i> Add to cart</button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3><a href="product-details.html">New Modern Sofa Set</a></h3>
+                            <div class="product-price">
+                                <span class="old-price">$80.50 </span>
+                                <span class="new-price">$75.25 </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock  %}
+    

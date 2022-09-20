@@ -1,0 +1,134 @@
+{% load static %}
+{% load mptt_tags %}
+
+<header class="header-area header-responsive-padding header-height-1">
+    <div class="header-top d-none d-lg-block bg-gray">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-6">
+                    {% if user.is_authenticated %}
+                    <div class="welcome-text">
+                        <marquee width="50%"><p> Welcome to {{user.first_name}} {{user.last_name}} </p></marquee>
+                    </div>
+                    {% else %}
+                    <div class="welcome-text">
+                        <marquee width="50%"><p> Welcome to our website ! </p></marquee>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6 col-6">
+                    <div class="language-currency-wrap">
+                        <div class="currency-wrap border-style">
+                            <a class="currency-active" href="#">$ Dollar (US) <i class=" ti-angle-down "></i></a>
+                            <div class="currency-dropdown">
+                                <ul>
+                                    <li><a href="#">Taka (BDT) </a></li>
+                                    <li><a href="#">Riyal (SAR) </a></li>
+                                    <li><a href="#">Rupee (INR) </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="language-wrap">
+                            <a class="language-active" href="#"><img src="{% static 'assets/images/icon-img/flag.png' %}" alt=""> English <i class=" ti-angle-down "></i></a>
+                            <div class="language-dropdown">
+                                <ul>
+                                    <li><a href="#"><img src="{% static 'assets/images/icon-img/flag.png' %}" alt="">English </a></li>
+                                    <li><a href="#"><img src="{% static 'assets/images/icon-img/spanish.png' %}" alt="">Spanish</a></li>
+                                    <li><a href="#"><img src="{% static 'assets/images/icon-img/arabic.png' %}" alt="">Arabic </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom sticky-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-6 col-6">
+                    <div class="logo">
+                        <a href="{% url 'home' %}"><img src="{% static 'assets/images/logo/logo.png' %}" alt="logo"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block d-flex justify-content-center">
+                    <div class="main-menu text-center">
+                        <nav>
+                            <ul>
+                                <li><a href="{% url 'home' %}">HOME</a>
+
+                                </li>
+                                <li><a href="{% url 'shop' %}">SHOP</a>
+                                    <ul class="mega-menu-style mega-menu-mrg-1">
+                                        <li>
+                                            <ul>
+                                                {% recursetree categorys %}
+                                                <li>
+                                                    <a class="dropdown-title" href="/category/{{ node.id }}/{{ node.slug }}">{{ node.title }}</a>
+                                                    <ul>
+                                                        {% if not node.is_leaf_node %}
+                                                            <li><a href="shop.html">{{ children }}</a></li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </li>
+                                                {% endrecursetree %}
+                                                <br>
+                                            </ul>
+
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li><a href="{% url 'blog' %}">BLOG</a>
+                                </li>
+                                <li><a href="{% url 'about' %}">ABOUT</a></li>
+                                <li><a href="{% url 'contact' %}">CONTACT US</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-6">
+                    <div class="header-action-wrap">
+                        <div class="header-action-style header-search-1">
+                            <a class="search-toggle" href="#">
+                                <i class="pe-7s-search s-open"></i>
+                                <i class="pe-7s-close s-close"></i>
+                            </a>
+                            <div class="search-wrap-1">
+
+                                <form action="{% url 'search' %}" method="get">
+                                    <input placeholder="Search products…" type="text" name="query" id="query">
+                                    <button class="button-search"><i class="pe-7s-search"></i></button>
+                                </form>
+                                
+                            </div>
+                        </div>
+
+                        
+                        {% if user.is_authenticated %}
+                        <div class="header-action-style">
+                            <a title="Login Register" href="{% url 'my_account' %}"><i class="pe-7s-user"></i></a>
+                        </div>
+                        {% else %}
+                        <div class="header-action-style">
+                            <a title="Login Register" href="{% url 'login' %}"><i class="pe-7s-user"></i></a>
+                        </div>
+                        {% endif %}
+
+                        <div class="header-action-style">
+                            <a title="Wishlist" href="{% url 'wishlist' %}"><i class="pe-7s-like"></i></a>
+                        </div>
+                        <div class="header-action-style header-action-cart">
+                            <a class="cart-active" href="#"><i class="pe-7s-shopbag"></i>
+                                <span class="product-count bg-black">{{request.session.cart|length}}</span>
+                            </a>
+                        </div>
+                        <div class="header-action-style d-block d-lg-none">
+                            <a class="mobile-menu-active-button" href="#"><i class="pe-7s-menu"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

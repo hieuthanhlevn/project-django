@@ -1,0 +1,38 @@
+{% load static %}
+{% load humanize %}
+{% load cart_tag %}
+
+<div class="sidebar-cart-active">
+    <div class="sidebar-cart-all">
+        <a class="cart-close" href="#"><i class="pe-7s-close"></i></a>
+        <div class="cart-content">
+            <h3>Shopping Cart</h3>
+            <ul>
+                {% for key,value in request.session.cart.items %}
+                <li>
+                    <div class="cart-img">
+                        <a href="#"><img src="{{value.image}}" alt=""></a>
+                    </div>
+                    <div class="cart-title">
+                        <h4><a href="#">{{value.name|truncatechars:35}}</a></h4>
+                        <span> {{value.quantity}} × ${{value.price|floatformat:"0"|intcomma}}	</span>
+                    </div>
+                    <div class="cart-delete">
+                        <a href="{% url 'item_clear' key %}">×</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="cart-total">
+                <h4>Subtotal: <span>$ {{cart_total_amount|floatformat:"0"|intcomma}}</span></h4>
+            </div>
+            
+            <div class="cart-btn btn-hover">
+                <a class="theme-color" href="{% url 'cart_detail' %}">view cart</a>
+            </div>
+            <div class="checkout-btn btn-hover">
+                <a class="theme-color" href="{% url 'checkout' %}">checkout</a>
+            </div>
+        </div>
+    </div>
+</div>
