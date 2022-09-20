@@ -10,6 +10,7 @@ Tài khoản Admin: admin@gmail.com / 123
   + Quên mật khẩu
   + Đăng Xuất
   + Phân trang sản phẩm (page1, page2)
+  + Tính giá discount theo phần trăm giảm giá
 - **Về Khách hàng:**
   + Đăng kí, đăng nhập, đăng xuất
   + Thêm, xóa sản phẩm vào giỏ hàng
@@ -23,6 +24,8 @@ Tài khoản Admin: admin@gmail.com / 123
 - **Về quản trị:**
   + Thêm, sửa, xóa (Sản phẩm, Danh mục, Slider_HomePage, Blog)
   + Xem thông tin (đơn hàng, tài khoản người dùng, nội dung form liên hệ)
+  + Hiển thị sản phẩm theo tùy chỉnh (deal of the day, new arrivas, best seller, ...)
+ 
 
 
 
