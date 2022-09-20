@@ -14,7 +14,7 @@ Tài khoản Admin: admin@gmail.com / 123
   + Đăng kí, đăng nhập, đăng xuất
   + Thêm, xóa sản phẩm vào giỏ hàng
   + Thêm sản phẩm vào danh sách yêu thích
-  + Xem Blog
+  + Xem Blog, chi tiết sản phẩm
   + Liên hệ qua Form contact (Thông báo email Admin khi có thư form contact mới)
   + Chỉnh sửa thông tin cá nhân khách hàng và thay đổi mật khẩu
   + Xem lịch sử đơn hàng và chi tiết đơn hàng (Trạng thái đơn hàng)
