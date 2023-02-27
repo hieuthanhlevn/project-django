@@ -27,13 +27,14 @@ Tài khoản Admin: admin@gmail.com / 123
   + Hiển thị sản phẩm theo tùy chỉnh (deal of the day, new arrivas, best seller, ...)
  
 
-
-
-
 **PACKAGE ĐƯỢC SỬ DỤNG :**
 + pip install ckeditor
 + pip install mptt
 + pip install django-shopping-cart
+
+**LINK GIỚI THIỆU WEBSITE:** https://www.youtube.com/watch?v=_6r2_yhfNxM
+
+
 
 
 **MỘT SỐ HÌNH ẢNH VỀ WEBSITE: **
